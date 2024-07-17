@@ -135,7 +135,7 @@ end
 local function X(Y, Z)
   for _, _ in pairs(Z:GetChildren()) do
     if _.Name == "\77\97\116\99\104\67\111\110\116\97\105\110\101\114" then
-      for _, a0 in pairs(_.GetChildren()) do
+      for _, a0 in pairs(_:GetChildren()) do
         if a0.Name == "\83\116\97\110\100" then
           local a1 = 0
           for _, a2 in ipairs(a0:GetChildren()) do
