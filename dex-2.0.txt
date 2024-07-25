@@ -8671,8 +8671,10 @@ openEvent.Event:connect(function(...)
 end)
 
 clipboardButton.MouseButton1Click:connect(function()
+	setclipboard(currentSource)
 	if Clipboard and Clipboard.set then
 		Clipboard.set(currentSource)
+		setclipboard(currentSource)
 	elseif CopyString then
 		CopyString(currentSource)
 	end
