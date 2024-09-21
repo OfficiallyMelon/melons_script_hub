@@ -124,7 +124,7 @@ function teleportToPoint(vec3)
         end
     end)
 
-    repeat task.wait() until reached
+    repeat task.wait() until reached or Char.Humanoid.Health == 0
     connection:Disconnect()
     bV:Destroy()
 end
