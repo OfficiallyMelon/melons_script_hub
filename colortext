@@ -1,42 +1,51 @@
 local Modules = {
-    Colors =  {
+    Colors = {
         ["Green"] = "0,255,0", -- color in rgb
         ["Red"] = "255,0,0"
     }
 }
 
+local isConnected = false  -- Flag to check if the connection is already made
+
 Modules.ChangeColor = function() 
+    if isConnected then return end  -- Exit if already connected
+
+    isConnected = true  -- Set the flag to true
     game:GetService("RunService").Heartbeat:Connect(function()
-    	if game:GetService("CoreGui"):FindFirstChild("DevConsoleMaster") then 
-	        for _, v in pairs(game:GetService("CoreGui"):FindFirstChild("DevConsoleMaster"):GetDescendants()) do 
-	            if v:IsA("TextLabel") then 
-	                v.RichText = true 
-	            end 
-	        end 
-	    end
+        local devConsole = game:GetService("CoreGui"):FindFirstChild("DevConsoleMaster")
+        if devConsole then 
+            for _, v in pairs(devConsole:GetDescendants()) do 
+                if v:IsA("TextLabel") then 
+                    v.RichText = true 
+                end 
+            end 
+        end
     end)
 end
 
 Modules.print = function(color, color2, text, text2, size)
     if not Modules.Colors[color] then 
-        warn("Color was not found!")
+        warn("Color '" .. color .. "' was not found!")
         return 
     end 
     
-    local Text = '<font color="rgb(' .. Modules.Colors[color] .. ')"'
-    if size then
-        Text = Text .. ' size="' .. tostring(size) .. '"'
-    end
-    Text = Text .. '>' .. tostring(text) .. '</font>'
+    if not Modules.Colors[color2] then 
+        warn("Color '" .. color2 .. "' was not found!")
+        return 
+    end 
 
-    local Text2 = '<font color="rgb(' .. Modules.Colors[color2] .. ')"'
-    if size then
-        Text2 = Text2 .. ' size="' .. tostring(size) .. '"'
+    local function createText(color, text)
+        local formattedText = '<font color="rgb(' .. Modules.Colors[color] .. ')"'
+        if size then
+            formattedText = formattedText .. ' size="' .. tostring(size) .. '"'
+        end
+        return formattedText .. '>' .. tostring(text) .. '</font>'
     end
-    Text2 = Text2 .. '>' .. tostring(text2) .. '</font>'
+
+    local Text = createText(color, text)
+    local Text2 = createText(color2, text2)
     print(Text, Text2)
 end
-
 
 Modules.ChangeColor()
 
