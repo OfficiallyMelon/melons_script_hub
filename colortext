@@ -49,4 +49,4 @@ end
 
 Modules.ChangeColor()
 
-return Modules
+return Modules.print
